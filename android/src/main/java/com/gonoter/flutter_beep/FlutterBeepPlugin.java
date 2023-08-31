@@ -32,6 +32,11 @@ public class FlutterBeepPlugin implements FlutterPlugin, MethodCallHandler {
       int soundId = call.argument("soundId");
       playSysSound(soundId);
       result.success(true);
+    } else  if (call.method.equals("playSysSoundTimed")) {
+        int soundId = call.argument("soundId");
+        int duration = call.argument("duration");
+        playSysSoundTimed(soundId, duration);
+        result.success(true);
     } else if (call.method.equals("stopSysSound")) {
       stopSysSound();
       result.success(true);
@@ -47,6 +52,10 @@ public class FlutterBeepPlugin implements FlutterPlugin, MethodCallHandler {
 
   private void playSysSound(int soundID) {
     toneGen.startTone(soundID);
+  }
+
+  private void playSysSoundTimed(int soundID, int duration) {
+    toneGen.startTone(soundID, duration);
   }
 
   private void stopSysSound() {

@@ -12,11 +12,20 @@ class FlutterBeep {
     return _channel.invokeMethod('playSysSound', args);
   }
 
+  static Future<void> playSysSound(int soundId, int duration) async {
+    var args = <String, dynamic>{"soundId": soundId, "duration":duration};
+    if (Platform.isAndroid) await _channel.invokeMethod('stopSysSound');
+    return _channel.invokeMethod('playSysSoundTimed', args);
+  }
+
+
   static Future<void> beep([bool success = true]) {
     var soundId =
         (Platform.isAndroid) ? (success ? 24 : 25) : (success ? 1256 : 1257);
     return playSysSound(soundId);
   }
+
+
 }
 
 class AndroidSoundIDs {
